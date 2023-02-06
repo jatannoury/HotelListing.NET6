@@ -49,10 +49,10 @@ namespace HotelListing.API.Controllers
         {
             if (id != country.Id)
             {
-                return BadRequest();
+                return BadRequest("Invalid Record Id");
             }
-
-            _context.Entry(country).State = EntityState.Modified;
+            
+            _context.Entry(country).State = EntityState.Modified; //changes the state of the entity to update before modifying it so that we know that it is not a new record
 
             try
             {
