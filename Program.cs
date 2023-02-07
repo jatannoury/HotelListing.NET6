@@ -1,4 +1,7 @@
+using HotelListing.API.Configurations;
+using HotelListing.API.Contracts;
 using HotelListing.API.Data;
+using HotelListing.API.Repository;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -27,6 +30,11 @@ builder.Services.AddCors(options =>
 });
 
 builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration.WriteTo.Console().ReadFrom.Configuration(context.Configuration));
+
+builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>)); //The AddScoped method specifies that a new instance of CountriesRepository should be created for each request/scope in the application. The instance will be created once per request/scope and shared among all components that require it during that request/scope. Once the request/scope is completed, the instance will be discarded.
+builder.Services.AddScoped<ICountriesRepository, CountriesRepository>(); // In order for this Dependecy injection to work, the countriesRepository needs to have a constructor that takes 0 or more dependencies
 
 var app = builder.Build();
 
