@@ -9,11 +9,14 @@ using HotelListing.API.Data;
 using HotelListing.API.Models.Country;
 using AutoMapper;
 using HotelListing.API.Contracts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelListing.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] // By adding this line we made every endpoint correlated with the countries controller protected by htis flag
+    // The authorize flag can be set separately for each standalone endpoint, by moving its location from here to above each reaquired endpoint to be authorized
     public class CountriesController : ControllerBase
     {
         private readonly IMapper _mapper;

@@ -9,11 +9,13 @@ using HotelListing.API.Data;
 using HotelListing.API.Contracts;
 using AutoMapper;
 using HotelListing.API.Models.Hotels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelListing.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class HotelsController : ControllerBase
     {
         private readonly IHotelsRepository _hotelsRepository;
@@ -95,6 +97,7 @@ namespace HotelListing.API.Controllers
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteHotel(int id)
         {
             var hotel = await _hotelsRepository.GetAsync(id);
