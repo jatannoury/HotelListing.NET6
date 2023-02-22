@@ -20,7 +20,11 @@ builder.Services.AddDbContext<HotelListingDbContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
-builder.Services.AddIdentityCore<ApiUser>().AddRoles<IdentityRole>().AddEntityFrameworkStores<HotelListingDbContext>(); // the AddRoles method canot take any object that is not Identity user or does not extend identity user
+builder.Services.AddIdentityCore<ApiUser>()
+    .AddRoles<IdentityRole>()  // the AddRoles method canot take any object that is not Identity user or does not extend identity user
+    .AddTokenProvider<DataProtectorTokenProvider<ApiUser>>("HotelListingApi")
+    .AddEntityFrameworkStores<HotelListingDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
